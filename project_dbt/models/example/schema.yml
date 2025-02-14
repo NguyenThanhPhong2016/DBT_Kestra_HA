@@ -1,0 +1,16 @@
+
+version: 2
+
+sources:
+  - name: iceberg  # 🔥 Tên này phải trùng với `source('my_source_db', 'table1')`
+    database: iceberg    # 🔥 Nếu Trino yêu cầu database, nếu không có thể bỏ
+    schema: my_schema1   # 🔥 Schema chứa bảng `table1`
+    tables:
+      - name: table1     # 🔥 Tên bảng gốc trong Trino
+      - name: table4     # 🔥 Tên bảng gốc trong Trino
+  - name: oracle  # 🔥 Tên này phải trùng với `source('my_source_db', 'table1')`
+    database: oracle    # 🔥 Nếu Trino yêu cầu database, nếu không có thể bỏ
+    schema: rvnit   # 🔥 Schema chứa bảng `table1`
+    tables:
+      - name: test_scd2
+

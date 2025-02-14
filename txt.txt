@@ -1,0 +1,55 @@
+
+version: 2
+
+models:
+  - name: my_first_dbt_model
+    description: "A starter dbt model"
+    columns:
+      - name: id
+        description: "The primary key for this table"
+        data_tests:
+          - unique
+          - not_null
+sources:
+  - name: iceberg  # 🔥 Tên này phải trùng với `source('my_source_db', 'table1')`
+    database: iceberg    # 🔥 Nếu Trino yêu cầu database, nếu không có thể bỏ
+    schema: my_schema1   # 🔥 Schema chứa bảng `table1`
+    tables:
+      - name: table1     # 🔥 Tên bảng gốc trong Trino
+      - name: table4     # 🔥 Tên bảng gốc trong Trino
+  - name: oracle  # 🔥 Tên này phải trùng với `source('my_source_db', 'table1')`
+    database: oracle    # 🔥 Nếu Trino yêu cầu database, nếu không có thể bỏ
+    schema: rvnit   # 🔥 Schema chứa bảng `table1`
+    tables:
+      - name: test_scd2
+
+
+docker tag my-dbt-project:v1 phong192016/my-dbt-project:v1
+docker push phong192016/my-dbt-project:v1
+
+
+docker build -t my-dbt-project:v11  .
+docker tag my-dbt-project:v11 phong192016/my-dbt-project:v11 
+docker push phong192016/my-dbt-project:v11
+
+
+dbt run --profiles-dir . --project-dir . -s models/example/*
+docker run --rm -it --entrypoint bash phong192016/my-dbt-project:v5
+
+
+dbt run --profiles-dir ./project_dbt --project-dir ./project_dbt
+dbt run --profiles-dir . --project-dir . -s project_dbt://model/scd_type2_from_oracle1.sql
+
+kubectl port-forward svc/airflow-webserver 8080:8080 
+
+
+kubectl run debug-dbt3 --rm -it --image=phong192016/my-dbt-project:v10 -- /bin/bash
+dbt debug --profiles-dir . --project-dir . -s ./models/example/*
+dbt list --resource-type model
+
+rm -rf /project_dbt/target
+dbt clean --project-dir /project_dbt
+dbt compile --project-dir /project_dbt
+
+git remote add origin https://github.com/NguyenThanhPhong2016/DBT_Kestra_HA.git
+ssh -T git@github.com:NguyenThanhPhong2016/Dbt_project_HA.git

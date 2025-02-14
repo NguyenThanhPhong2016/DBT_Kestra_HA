@@ -1,0 +1,18 @@
+
+project_dbt:  # Đây là tên profile
+  target: dev
+  outputs:
+    dev:
+      type: trino
+      host: 192.168.1.17
+      port: 31003
+      user: phongnt 
+      password: 
+      database: iceberg 
+      schema: my_schema1 
+      protocol: tcp
+
+
+
+
+
